@@ -51,9 +51,7 @@ class Sqs(Broker):
 
     @staticmethod
     def get_connection(list_key=Conf.PREFIX):
-        return Session(aws_access_key_id=Conf.SQS['aws_access_key_id'],
-                       aws_secret_access_key=Conf.SQS['aws_secret_access_key'],
-                       region_name=Conf.SQS['aws_region'])
+        return Session(**Conf.SQS)
 
     def get_queue(self):
         self.sqs = self.connection.resource('sqs')
