@@ -8,6 +8,8 @@ from django.core import signing
 
 from django_q.conf import Conf
 
+import json
+
 BadSignature = signing.BadSignature
 
 
@@ -17,18 +19,11 @@ class SignedPackage(object):
 
     @staticmethod
     def dumps(obj, compressed=Conf.COMPRESSED):
-        return signing.dumps(obj,
-                             key=Conf.SECRET_KEY,
-                             salt=Conf.PREFIX,
-                             compress=compressed,
-                             serializer=PickleSerializer)
+        return json.dumps(obj)
 
     @staticmethod
     def loads(obj):
-        return signing.loads(obj,
-                             key=Conf.SECRET_KEY,
-                             salt=Conf.PREFIX,
-                             serializer=PickleSerializer)
+        return json.loads(obj)
 
 
 class PickleSerializer(object):
